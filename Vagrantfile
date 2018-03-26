@@ -6,13 +6,25 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.manage_guest = true
+  config.hostmanager.include_offline = true
+
+  config.vm.define 'spark' do |node|
+    node.vm.box = "centos/7"
+    node.vm.hostname = 'spark.vagrant'
+    node.vm.network :private_network, ip: '192.168.42.42'
+
+    # Enable provisioning with Ansible.
+    node.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/main.yml"
+    end
+  end
+
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
-
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "centos/7"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -67,10 +79,4 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-
-  # Enable provisioning with Ansible.
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provisioning/main.yml"
-  end
-
 end
