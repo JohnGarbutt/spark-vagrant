@@ -4,3 +4,6 @@
 
   roles:
     - role: andrewrothstein.spark
+
+  tasks:
+    - import_tasks: setup.yml
