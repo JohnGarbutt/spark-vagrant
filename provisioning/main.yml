@@ -3,6 +3,7 @@
   become: yes
 
   roles:
+    - role: andrewrothstein.ssh-user-keygen
     - role: andrewrothstein.spark
 
   tasks:
