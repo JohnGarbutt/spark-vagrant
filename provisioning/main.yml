@@ -3,8 +3,10 @@
   become: yes
 
   roles:
+    - {role: spark-bench, spark_master: "spark"}
     - role: andrewrothstein.ssh-user-keygen
     - role: andrewrothstein.spark
 
   tasks:
+    - import_tasks: bench.yml
     - import_tasks: setup.yml
