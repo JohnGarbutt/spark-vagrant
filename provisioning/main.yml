@@ -8,5 +8,4 @@
     - role: andrewrothstein.spark
 
   tasks:
-    - import_tasks: bench.yml
     - import_tasks: setup.yml
