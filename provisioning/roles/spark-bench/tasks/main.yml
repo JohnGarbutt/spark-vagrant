@@ -12,6 +12,7 @@
 
 - name: Run spark-bench example
   shell: |
+    export PATH=$PATH:/usr/local/java/bin
     export SPARK_HOME=/usr/local/spark
     export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
     export SB_HOME=/usr/local/spark-bench_2.1.1_0.2.2-RELEASE
@@ -40,6 +41,7 @@
 
 - name: Generate kmeans files
   shell: |
+    export PATH=$PATH:/usr/local/java/bin
     export SPARK_HOME=/usr/local/spark
     export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
     export SB_HOME=/usr/local/spark-bench_2.1.1_0.2.2-RELEASE
@@ -62,6 +64,7 @@
 
 - name: Run kmeans benchmark
   shell: |
+    export PATH=$PATH:/usr/local/java/bin
     export SPARK_HOME=/usr/local/spark
     export SPARK_MASTER_HOST=spark://{{ ansible_host }}:7077
     export SB_HOME=/usr/local/spark-bench_2.1.1_0.2.2-RELEASE
