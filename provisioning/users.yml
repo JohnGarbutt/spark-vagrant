@@ -14,10 +14,14 @@
     creates: /home/hadoop/.ssh/id_rsa
   become_user: hadoop
 - name: trust ssh key make about
-  shell: echo ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys
+  shell: cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys
   args:
     creates: /home/hadoop/.ssh/authorized_keys
   become_user: hadoop
 - name: trust host key
-  shell: ssh-keyscan -H {{ ansible_host }} >> ~/.ssh/known_hosts
+  shell: |
+    ssh-keyscan -H {{ ansible_host }} >> ~/.ssh/known_hosts
+    ssh-keyscan -H localhost >> ~/.ssh/known_hosts
+  args:
+    creates: /home/hadoop/.ssh/known_hosts
   become_user: hadoop
