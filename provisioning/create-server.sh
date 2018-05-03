@@ -30,6 +30,12 @@ if ! openstack server show $NAME >/dev/null 2>&1; then
 	uuid=$(openstack server show spark-ukt0-test --format value -c id)
 	floating_ip=$(openstack floating ip create $EXTERNAL_NETWORK_NAME -c floating_ip_address --format value)
 	openstack server add floating ip $uuid $floating_ip
+
+	# wait for server to startup
+	while ! ping -c 1 -n -w 1 $floating_ip &> /dev/null
+	do
+		echo "."
+	done
 fi
 
 server_info=$(openstack server show $NAME --format json)
