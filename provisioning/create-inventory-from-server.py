@@ -38,7 +38,7 @@ def main():
         raise Exception("Not found just one floating ip, panic!")
 
     print "[all]"
-    print server_address
+    print "%s ansible_user=centos" % server_address
 
 
 if __name__ == '__main__':
