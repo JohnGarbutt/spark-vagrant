@@ -35,8 +35,10 @@ fi
 server_info=$(openstack server show $NAME --format json)
 echo $server_info
 
-deactivate
-
 ip=$(openstack server show spark-ukt0-test --format value -c addresses | cut -c 6-)
-uuid=$(openstack server show spark-ukt0-test --format value -c id)yy
+uuid=$(openstack server show spark-ukt0-test --format value -c id)
 #ssh $USER@$ip
+
+./create-inventory-from-server.py $uuid > inventory
+
+deactivate
