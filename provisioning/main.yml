@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  become: yes
   tasks:
     - import_tasks: users.yml
 
@@ -11,5 +12,6 @@
     - import_tasks: setup.yml
 
 - hosts: all
+  become: yes
   roles:
     - {role: spark-bench, spark_master: "spark"}
