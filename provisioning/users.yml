@@ -1,0 +1,10 @@
+---
+- name: create hadoop group
+  group:
+    name: hadoop
+    gid: 1001
+- name: create hadoop user
+  user:
+    name: hadoop
+    uid: 1001
+    group: hadoop 

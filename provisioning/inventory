@@ -1,2 +1,2 @@
 [all]
-localhost ansible_connection=local
+172.16.8.143 ansible_user=centos
