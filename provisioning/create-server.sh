@@ -41,4 +41,6 @@ uuid=$(openstack server show spark-ukt0-test --format value -c id)
 
 ./create-inventory-from-server.py $uuid > inventory
 
+ansible-playbook -i inventory main.yml
+
 deactivate

@@ -1,12 +1,13 @@
 ---
 - hosts: all
-  become: yes
-
-  roles:
-    - role: andrewrothstein.spark
-
   tasks:
     - import_tasks: users.yml
+
+- hosts: all
+  become: yes
+  roles:
+    - role: andrewrothstein.spark
+  tasks:
     - import_tasks: setup.yml
 
 - hosts: all
