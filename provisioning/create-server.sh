@@ -18,6 +18,7 @@ then
 	KEYPAIR_NAME=${KEYPAIR_NAME:-mine}
 	NETWORK_NAME=${NETWORK_NAME:-test}
 	EXTERNAL_NETWORK_NAME=${EXTERNAL_NETWORK_NAME:-dev-vlan}
+        GENERATE_KMEANS=${GENERATE_KMEANS:-true}
 fi
 if [ "$OS_CLOUD" == "alaska" ]
 then
@@ -27,6 +28,7 @@ then
 	KEYPAIR_NAME=${KEYPAIR_NAME:-usual}
 	NETWORK_NAME=${NETWORK_NAME:-p3-internal}
 	EXTERNAL_NETWORK_NAME=${EXTERNAL_NETWORK_NAME:-ilab}
+        GENERATE_KMEANS=${GENERATE_KMEANS:-false}
 fi
 
 if ! openstack server show $NAME >/dev/null 2>&1; then
@@ -59,6 +61,6 @@ uuid=$(openstack server show spark-ukt0-test --format value -c id)
 
 ./create-inventory-from-server.py $uuid > inventory
 
-ansible-playbook -i inventory main.yml
+ansible-playbook -i inventory main.yml -e spark_bench_generate_kmeans=$GENERATE_KMEANS
 
 deactivate
