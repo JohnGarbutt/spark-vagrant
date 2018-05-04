@@ -8,13 +8,26 @@ pip install python-openstackclient
 set -eux
 
 NAME="spark-ukt0-test"
-FLAVOR=${FLAVOR:-"4x16"}
-IMAGE_NAME=${IMAGE_NAME:-"CentOS7"}
-USER="centos"
-KEYPAIR_NAME=${KEYPAIR_NAME:-mine}
-NETWORK_NAME=${NETWORK_NAME:-test}
 
 export OS_CLOUD=${OS_CLOUD:-"hphi"}
+if [ "$OS_CLOUD" == "hphi" ]
+then
+	FLAVOR=${FLAVOR:-"4x16"}
+	IMAGE_NAME=${IMAGE_NAME:-"CentOS7"}
+	USER="centos"
+	KEYPAIR_NAME=${KEYPAIR_NAME:-mine}
+	NETWORK_NAME=${NETWORK_NAME:-test}
+	EXTERNAL_NETWORK_NAME=${EXTERNAL_NETWORK_NAME:-dev-vlan}
+fi
+if [ "$OS_CLOUD" == "alaska" ]
+then
+	FLAVOR=${FLAVOR:-"compute-A"}
+	IMAGE_NAME=${IMAGE_NAME:-"CentOS7"}
+	USER="centos"
+	KEYPAIR_NAME=${KEYPAIR_NAME:-usual}
+	NETWORK_NAME=${NETWORK_NAME:-p3-internal}
+	EXTERNAL_NETWORK_NAME=${EXTERNAL_NETWORK_NAME:-ilab}
+fi
 
 if ! openstack server show $NAME >/dev/null 2>&1; then
 	openstack server create \
@@ -25,7 +38,6 @@ if ! openstack server show $NAME >/dev/null 2>&1; then
 		--wait \
 		$NAME
 
-	EXTERNAL_NETWORK_NAME=dev-vlan
 
 	uuid=$(openstack server show spark-ukt0-test --format value -c id)
 	floating_ip=$(openstack floating ip create $EXTERNAL_NETWORK_NAME -c floating_ip_address --format value)
