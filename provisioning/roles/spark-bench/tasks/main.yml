@@ -49,6 +49,22 @@
   args:
     creates: /tmp/kmeans-medium/kmeans-data.csv
   become_user: hadoop
+  when: spark_bench_generate_kmeans|default(true)
+
+- name: Pull kmeans generation locally onto control host
+  synchronize:
+    mode: pull
+    src:  /tmp/kmeans-medium/kmeans-data.csv
+    dest: /tmp/kmeans-medium/
+    recursive: yes
+  when: spark_bench_generate_kmeans|default(true)
+
+- name: Push kmeans from control host to remote host
+  synchronize:
+    src:  /tmp/kmeans-medium/
+    dest: /tmp/kmeans-medium/
+    recursive: yes
+  when: not spark_bench_generate_kmeans|default(true)
 
 - name: Wait to help post test graphs
   pause:
