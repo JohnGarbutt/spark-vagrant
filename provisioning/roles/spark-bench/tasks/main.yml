@@ -66,17 +66,11 @@
     recursive: yes
   when: not (spark_bench_generate_kmeans | bool)
 
-- name: Wait to help post test graphs
-  pause:
-    seconds: 10
-
-- stat:
+- name: Clean out any old kmeans run info
+  file:
     path: /tmp/kmeans-medium-run
-  register: check_kmeans
-
-- pause:
-    prompt: "If you want to run kmeans benchmark, delete /tmp/kmeans-medium-run"
-  when: check_kmeans.stat.exists == True
+    state: directory
+    state: absent
 
 - name: Run kmeans benchmark
   shell: |
