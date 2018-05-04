@@ -1,2 +1,2 @@
 [all]
-172.16.8.145 ansible_user=centos
+10.60.253.43 ansible_user=centos

@@ -69,7 +69,6 @@
 - name: Clean out any old kmeans run info
   file:
     path: /tmp/kmeans-medium-run
-    state: directory
     state: absent
 
 - name: Run kmeans benchmark
