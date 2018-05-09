@@ -1,4 +1,6 @@
 ---
 - name: Run spark
   command: /usr/local/spark/sbin/start-all.sh
+  environment:
+    JAVA_HOME: /usr/local/java 
   become_user: hadoop
